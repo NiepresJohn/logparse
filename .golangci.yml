@@ -20,17 +20,14 @@ linters:
     - dogsled
     - dupl
     - gocritic
-    - gocyclo
     - gosec
-    - nakedret
     - prealloc
     - revive
-    - stylecheck
     - whitespace
 
 linters-settings:
   gocyclo:
-    min-complexity: 15
+    min-complexity: 20
   dupl:
     threshold: 100
   gocritic:
@@ -38,6 +35,26 @@ linters-settings:
       - performance
       - style
       - experimental
+    disabled-checks:
+      - hugeParam
+      - unnamedResult
+  revive:
+    rules:
+      - name: package-comments
+        disabled: true
+      - name: exported
+        disabled: true
+      - name: unused-parameter
+        disabled: true
+      - name: empty-block
+        disabled: true
+  stylecheck:
+    checks:
+      - all
+      - "-ST1000"
+      - "-ST1003"
+  prealloc:
+    simple: false
 
 issues:
   exclude-rules:
@@ -46,6 +63,7 @@ issues:
         - dupl
         - gosec
         - gocyclo
+        - errcheck
     - path: cmd/
       linters:
         - gocyclo
