@@ -10,11 +10,11 @@ import (
 
 func TestJSONParser_ParseLine(t *testing.T) {
 	tests := []struct {
-		name     string
-		line     string
-		wantErr  bool
-		wantLvl  string
-		wantMsg  string
+		name    string
+		line    string
+		wantErr bool
+		wantLvl string
+		wantMsg string
 	}{
 		{
 			name:    "valid json log",
@@ -130,7 +130,7 @@ func TestParser_Parse(t *testing.T) {
 
 	entries, errs := p.Parse(strings.NewReader(input))
 
-	var results []api.LogEntry
+	results := make([]api.LogEntry, 0, 3)
 	for entry := range entries {
 		results = append(results, entry)
 	}

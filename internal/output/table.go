@@ -108,4 +108,3 @@ func isTerminal() bool {
 	// For now, return false to keep output pipe-friendly
 	return false
 }
-

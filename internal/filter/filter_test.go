@@ -122,9 +122,9 @@ func TestChain(t *testing.T) {
 	)
 
 	tests := []struct {
-		name    string
-		entry   api.LogEntry
-		want    bool
+		name  string
+		entry api.LogEntry
+		want  bool
 	}{
 		{"warn with message", api.LogEntry{Level: "WARN", Message: "alert"}, true},
 		{"error with message", api.LogEntry{Level: "ERROR", Message: "fail"}, true},
