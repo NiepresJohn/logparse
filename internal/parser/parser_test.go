@@ -188,7 +188,9 @@ func TestDetectFormatAndReader(t *testing.T) {
 
 	// Verify the reader still has the original content
 	var buf bytes.Buffer
-	buf.ReadFrom(newR)
+	if _, err := buf.ReadFrom(newR); err != nil {
+		t.Fatalf("ReadFrom() error = %v", err)
+	}
 	if buf.String() != original {
 		t.Errorf("reader content = %q, want %q", buf.String(), original)
 	}
@@ -226,7 +228,7 @@ func BenchmarkJSONParser(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		p.ParseLine(line)
+		_, _ = p.ParseLine(line)
 	}
 }
 

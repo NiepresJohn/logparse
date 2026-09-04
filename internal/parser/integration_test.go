@@ -21,7 +21,11 @@ func TestEndToEnd_JSON(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Open() error = %v", err)
 	}
-	defer f.Close()
+	defer func() {
+		if err := f.Close(); err != nil {
+			t.Logf("Close() error = %v", err)
+		}
+	}()
 
 	out := output.NewJSONOutput()
 	chain := filter.NewChain(&filter.NotEmptyFilter{})
@@ -80,8 +84,15 @@ func TestEndToEnd_WithLevelFilter(t *testing.T) {
 
 func TestEndToEnd_Nginx(t *testing.T) {
 	p, _ := New(api.FormatNginx)
-	f, _ := os.Open("../../testdata/sample.nginx.log")
-	defer f.Close()
+	f, err := os.Open("../../testdata/sample.nginx.log")
+	if err != nil {
+		t.Fatalf("Open() error = %v", err)
+	}
+	defer func() {
+		if err := f.Close(); err != nil {
+			t.Logf("Close() error = %v", err)
+		}
+	}()
 
 	out := output.NewTableOutput()
 	chain := filter.NewChain(&filter.NotEmptyFilter{})
@@ -113,7 +124,11 @@ func TestEndToEnd_AutoDetect(t *testing.T) {
 			if err != nil {
 				t.Fatalf("Open() error = %v", err)
 			}
-			defer f.Close()
+			defer func() {
+				if err := f.Close(); err != nil {
+					t.Logf("Close() error = %v", err)
+				}
+			}()
 
 			format, reader := DetectFormatAndReader(f)
 			if format != tt.format {
@@ -145,14 +160,25 @@ func TestEndToEnd_LargeFile(t *testing.T) {
 
 	// Write 10000 lines
 	for i := 0; i < 10000; i++ {
-		f.WriteString(`{"level":"INFO","message":"test message"}` + "\n")
+		if _, err := f.WriteString(`{"level":"INFO","message":"test message"}` + "\n"); err != nil {
+			t.Fatalf("WriteString() error = %v", err)
+		}
 	}
-	f.Close()
+	if err := f.Close(); err != nil {
+		t.Fatalf("Close() error = %v", err)
+	}
 
 	// Parse it
 	p, _ := New(api.FormatJSON)
-	f, _ = os.Open(tmpFile)
-	defer f.Close()
+	f, err = os.Open(tmpFile)
+	if err != nil {
+		t.Fatalf("Open() error = %v", err)
+	}
+	defer func() {
+		if err := f.Close(); err != nil {
+			t.Logf("Close() error = %v", err)
+		}
+	}()
 
 	out := output.NewJSONOutput()
 	chain := filter.NewChain(&filter.NotEmptyFilter{})

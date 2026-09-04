@@ -23,5 +23,5 @@ func NewOutputter(format api.OutputType) (api.Outputter, error) {
 
 // WriteError writes an error message to w.
 func WriteError(w io.Writer, err error) {
-	fmt.Fprintf(w, "error: %v\n", err)
+	_, _ = fmt.Fprintf(w, "error: %v\n", err)
 }

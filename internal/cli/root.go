@@ -201,6 +201,7 @@ func run(cmd *cobra.Command, files []string, stdout, stderr io.Writer) error {
 	// Read from files
 	var totalStats *api.ParseStats
 	for _, path := range files {
+		//nolint:gosec // G304: path comes from CLI args, expected behavior
 		f, err := os.Open(path)
 		if err != nil {
 			return fmt.Errorf("open %s: %w", path, err)
