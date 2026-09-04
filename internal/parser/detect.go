@@ -34,7 +34,7 @@ func DetectFormatAndReader(r io.Reader) (api.FormatType, io.Reader) {
 }
 
 func detectFromSample(r io.Reader) api.FormatType {
-	scanner := bufio.Scanner(r)
+	scanner := bufio.NewScanner(r)
 	lines := make([]string, 0, sampleLines)
 
 	for scanner.Scan() && len(lines) < sampleLines {

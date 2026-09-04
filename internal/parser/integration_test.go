@@ -12,7 +12,7 @@ import (
 )
 
 func TestEndToEnd_JSON(t *testing.T) {
-	p, err := parser.New(api.FormatJSON)
+	p, err := New(api.FormatJSON)
 	if err != nil {
 		t.Fatalf("New() error = %v", err)
 	}
@@ -43,7 +43,7 @@ func TestEndToEnd_JSON(t *testing.T) {
 }
 
 func TestEndToEnd_WithLevelFilter(t *testing.T) {
-	p, _ := parser.New(api.FormatJSON)
+	p, _ := New(api.FormatJSON)
 	f, _ := os.Open("testdata/sample.json.log")
 	defer f.Close()
 
@@ -72,7 +72,7 @@ func TestEndToEnd_WithLevelFilter(t *testing.T) {
 }
 
 func TestEndToEnd_Nginx(t *testing.T) {
-	p, _ := parser.New(api.FormatNginx)
+	p, _ := New(api.FormatNginx)
 	f, _ := os.Open("testdata/sample.nginx.log")
 	defer f.Close()
 
@@ -113,7 +113,7 @@ func TestEndToEnd_AutoDetect(t *testing.T) {
 				t.Errorf("detected format = %q, want %q", format, tt.format)
 			}
 
-			p, _ := parser.New(format)
+			p, _ := New(format)
 			out := output.NewJSONOutput()
 			chain := filter.NewChain(&filter.NotEmptyFilter{})
 
@@ -143,7 +143,7 @@ func TestEndToEnd_LargeFile(t *testing.T) {
 	f.Close()
 
 	// Parse it
-	p, _ := parser.New(api.FormatJSON)
+	p, _ := New(api.FormatJSON)
 	f, _ = os.Open(tmpFile)
 	defer f.Close()
 
@@ -162,7 +162,7 @@ func TestEndToEnd_LargeFile(t *testing.T) {
 }
 
 func TestEndToEnd_EmptyLines(t *testing.T) {
-	p, _ := parser.New(api.FormatJSON)
+	p, _ := New(api.FormatJSON)
 
 	input := `{"level":"INFO","message":"first"}
 
@@ -185,7 +185,7 @@ func TestEndToEnd_EmptyLines(t *testing.T) {
 }
 
 func TestEndToEnd_MalformedLines(t *testing.T) {
-	p, _ := parser.New(api.FormatJSON)
+	p, _ := New(api.FormatJSON)
 
 	input := `{"level":"INFO","message":"valid"}
 this is not json
@@ -207,7 +207,7 @@ this is not json
 }
 
 func TestEndToEnd_StrictMode(t *testing.T) {
-	p, _ := parser.New(api.FormatJSON, api.WithStrict(true))
+	p, _ := New(api.FormatJSON, api.WithStrict(true))
 
 	input := `{"level":"INFO","message":"valid"}
 this is not json`
