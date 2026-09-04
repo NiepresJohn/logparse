@@ -218,7 +218,7 @@ func inferLevelFromText(line string) string {
 }
 
 func inferHTTPLvl(status string) string {
-	if len(status) == 0 {
+	if status == "" {
 		return "INFO"
 	}
 	switch status[0] {

@@ -76,7 +76,7 @@ func detectFromSample(r io.Reader) api.FormatType {
 
 func looksLikeJSON(line string) bool {
 	trimmed := trimLeftSpace(line)
-	if len(trimmed) == 0 || trimmed[0] != '{' {
+	if trimmed == "" || trimmed[0] != '{' {
 		return false
 	}
 	// Quick check: does it have a closing brace and quotes
