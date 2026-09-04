@@ -44,8 +44,15 @@ func TestEndToEnd_JSON(t *testing.T) {
 
 func TestEndToEnd_WithLevelFilter(t *testing.T) {
 	p, _ := New(api.FormatJSON)
-	f, _ := os.Open("../../testdata/sample.json.log")
-	defer f.Close()
+	f, err := os.Open("../../testdata/sample.json.log")
+	if err != nil {
+		t.Fatalf("Open() error = %v", err)
+	}
+	defer func() {
+		if err := f.Close(); err != nil {
+			t.Logf("Close() error = %v", err)
+		}
+	}()
 
 	out := output.NewJSONOutput()
 	chain := filter.NewChain(

@@ -68,8 +68,12 @@ func TestTableOutput_LongMessage(t *testing.T) {
 		Message: longMsg,
 	}
 
-	out.Write(&buf, entry)
-	out.Flush(&buf)
+	if err := out.Write(&buf, entry); err != nil {
+		t.Fatalf("Write() error = %v", err)
+	}
+	if err := out.Flush(&buf); err != nil {
+		t.Fatalf("Flush() error = %v", err)
+	}
 
 	output := buf.String()
 	if strings.Contains(output, longMsg) {
@@ -150,9 +154,13 @@ func TestCSVOutput_MultipleEntries(t *testing.T) {
 	}
 
 	for _, e := range entries {
-		out.Write(&buf, e)
+		if err := out.Write(&buf, e); err != nil {
+			t.Fatalf("Write() error = %v", err)
+		}
 	}
-	out.Flush(&buf)
+	if err := out.Flush(&buf); err != nil {
+		t.Fatalf("Flush() error = %v", err)
+	}
 
 	lines := strings.Split(strings.TrimSpace(buf.String()), "\n")
 	if len(lines) != 4 { // header + 3 entries

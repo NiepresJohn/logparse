@@ -216,7 +216,9 @@ func run(cmd *cobra.Command, files []string, stdout, stderr io.Writer) error {
 		}
 
 		stats, err := parseReader(currentParser, reader, filterChain, outputter, stdout)
-		f.Close()
+		if closeErr := f.Close(); closeErr != nil {
+			return fmt.Errorf("close %s: %w", path, closeErr)
+		}
 		if err != nil {
 			return err
 		}
@@ -267,14 +269,16 @@ func printSummary(w io.Writer, stats *api.ParseStats) {
 	if stats == nil {
 		return
 	}
-	fmt.Fprintf(w, "\n--- Summary ---\n")
-	fmt.Fprintf(w, "Total lines:   %d\n", stats.TotalLines)
-	fmt.Fprintf(w, "Parsed lines:  %d\n", stats.ParsedLines)
-	fmt.Fprintf(w, "Skipped lines: %d\n", stats.SkippedLines)
+	if _, err := fmt.Fprintf(w, "\n--- Summary ---\n"); err != nil {
+		return
+	}
+	_, _ = fmt.Fprintf(w, "Total lines:   %d\n", stats.TotalLines)
+	_, _ = fmt.Fprintf(w, "Parsed lines:  %d\n", stats.ParsedLines)
+	_, _ = fmt.Fprintf(w, "Skipped lines: %d\n", stats.SkippedLines)
 	if len(stats.ByLevel) > 0 {
-		fmt.Fprintf(w, "By level:\n")
+		_, _ = fmt.Fprintf(w, "By level:\n")
 		for level, count := range stats.ByLevel {
-			fmt.Fprintf(w, "  %s: %d\n", level, count)
+			_, _ = fmt.Fprintf(w, "  %s: %d\n", level, count)
 		}
 	}
 }
