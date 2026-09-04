@@ -1,0 +1,7 @@
+<134>Jan 15 10:30:00 webserver nginx[1234]: Server started on port 80
+<134>Jan 15 10:30:01 webserver app[5678]: INFO: Application initialized
+<132>Jan 15 10:30:02 webserver app[5678]: WARN: Connection pool nearing capacity (80/100)
+<131>Jan 15 10:30:03 webserver app[5678]: ERROR: Database query timeout after 30s
+<134>Jan 15 10:30:04 webserver app[5678]: INFO: Request handled in 45ms
+<131>Jan 15 10:30:05 webserver app[5678]: ERROR: Failed to send email: SMTP error
+<130>Jan 15 10:30:06 webserver kernel[0]: Out of memory: Killed process 5678 (app)
