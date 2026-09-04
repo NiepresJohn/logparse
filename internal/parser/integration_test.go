@@ -61,7 +61,7 @@ func TestEndToEnd_WithLevelFilter(t *testing.T) {
 	)
 
 	var buf strings.Builder
-	_, err := p.ParseAndFilter(f, chain, out, &buf)
+	_, err = p.ParseAndFilter(f, chain, out, &buf)
 	if err != nil {
 		t.Fatalf("ParseAndFilter() error = %v", err)
 	}
