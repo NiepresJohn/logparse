@@ -39,7 +39,7 @@ func TestRun_EmptyStdin(t *testing.T) {
 func TestRun_WithJsonFile(t *testing.T) {
 	cmd := NewRootCommand()
 	// Use -- to separate flags from positional args
-	cmd.SetArgs([]string{"--output", "json", "--", "../testdata/sample.json.log"})
+	cmd.SetArgs([]string{"--output", "json", "--", "../../testdata/sample.json.log"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
@@ -58,7 +58,7 @@ func TestRun_WithJsonFile(t *testing.T) {
 
 func TestRun_WithLevelFilter(t *testing.T) {
 	cmd := NewRootCommand()
-	cmd.SetArgs([]string{"--level", "ERROR", "--output", "json", "--", "../testdata/sample.json.log"})
+	cmd.SetArgs([]string{"--level", "ERROR", "--output", "json", "--", "../../testdata/sample.json.log"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
@@ -83,7 +83,7 @@ func TestRun_WithLevelFilter(t *testing.T) {
 
 func TestRun_WithInvalidLevel(t *testing.T) {
 	cmd := NewRootCommand()
-	cmd.SetArgs([]string{"--level", "INVALID", "--", "../testdata/sample.json.log"})
+	cmd.SetArgs([]string{"--level", "INVALID", "--", "../../testdata/sample.json.log"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
@@ -97,7 +97,7 @@ func TestRun_WithInvalidLevel(t *testing.T) {
 
 func TestRun_WithSummary(t *testing.T) {
 	cmd := NewRootCommand()
-	cmd.SetArgs([]string{"--summary", "--", "../testdata/sample.json.log"})
+	cmd.SetArgs([]string{"--summary", "--", "../../testdata/sample.json.log"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
@@ -115,7 +115,7 @@ func TestRun_WithSummary(t *testing.T) {
 
 func TestRun_WithCSVOutput(t *testing.T) {
 	cmd := NewRootCommand()
-	cmd.SetArgs([]string{"--output", "csv", "--", "../testdata/sample.json.log"})
+	cmd.SetArgs([]string{"--output", "csv", "--", "../../testdata/sample.json.log"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
@@ -134,7 +134,7 @@ func TestRun_WithCSVOutput(t *testing.T) {
 
 func TestRun_WithGrepFilter(t *testing.T) {
 	cmd := NewRootCommand()
-	cmd.SetArgs([]string{"--grep", "ERROR|FATAL", "--output", "json", "--", "../testdata/sample.json.log"})
+	cmd.SetArgs([]string{"--grep", "ERROR|FATAL", "--output", "json", "--", "../../testdata/sample.json.log"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
@@ -153,7 +153,7 @@ func TestRun_WithGrepFilter(t *testing.T) {
 
 func TestRun_WithNginxFormat(t *testing.T) {
 	cmd := NewRootCommand()
-	cmd.SetArgs([]string{"--format", "nginx", "--output", "json", "--", "../testdata/sample.nginx.log"})
+	cmd.SetArgs([]string{"--format", "nginx", "--output", "json", "--", "../../testdata/sample.nginx.log"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
@@ -172,7 +172,7 @@ func TestRun_WithNginxFormat(t *testing.T) {
 
 func TestRun_WithSyslogFormat(t *testing.T) {
 	cmd := NewRootCommand()
-	cmd.SetArgs([]string{"--format", "syslog", "--output", "json", "--", "../testdata/sample.syslog"})
+	cmd.SetArgs([]string{"--format", "syslog", "--output", "json", "--", "../../testdata/sample.syslog"})
 
 	var stdout, stderr bytes.Buffer
 	cmd.SetOut(&stdout)
